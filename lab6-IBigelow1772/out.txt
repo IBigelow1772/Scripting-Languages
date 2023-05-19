@@ -1,0 +1,3 @@
+"Stout, Eve","Eve.Stout@mail.weber.edu"
+"Ashley, Karl","Karl.Ashley@mail.weber.edu"
+"Patel, Samantha","Samantha.Patel@mail.weber.edu"

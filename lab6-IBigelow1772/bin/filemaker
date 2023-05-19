@@ -1,0 +1,118 @@
+#!/usr/bin/python3
+# Ian Bigelow
+# Lab 6 - Filemaker
+# CS 3030 - Scripting Languages
+
+import sys
+import random
+import shlex
+
+# Check parameters
+if len(sys.argv) != 4:
+	print("Usage: ./filemaker <INPUTCOMMANDFILE> <OUTPUTFILE> <RECORDCOUNT>")
+	exit(1)
+
+# Assign Arguments to Variables
+inputFile = sys.argv[1]
+outputFile = sys.argv[2]
+recordCount = sys.argv[3]
+
+# Convert RECORDCOUNT from a string to an integer.
+try:
+	recordCount = int(recordCount)
+except Error:
+	print("ERROR: RECORDCOUNT INVALID")
+	exit(1)
+
+# Open files, exit if a file cannot be opened.
+try:
+	inputFile = open(inputFile, 'r')
+except Error:
+	print("ERROR: INPUT FILE DID NOT OPEN")
+	exit(1)
+
+try:
+	outputFile = open(outputFile, 'w')
+except Error:
+	print("ERROR: OUTPUT FILE DID NOT OPEN")
+	exit(1)
+
+# Define Dictionary randomFiles
+randomFiles = {}
+
+# Slurp commands from Input Command File into a list
+cmdList = inputFile.readlines()
+
+# Write HEADER to Output File
+header = shlex.split(cmdList[0])
+if header[0] == "HEADER":
+	outputFile.write(header[1].encode("utf-8").decode("unicode_escape"))
+
+# Slurp files into randomFiles
+for i in range(len(cmdList)):
+	cmd = shlex.split(cmdList[i])
+	if cmd[0] == "WORD":
+		cmdFile = open(cmd[2], 'r')
+		randomFiles[cmd[2]] = cmdFile.readlines() # Add Command File to Dictionary
+		#print(randomFiles) #TODO REMOVE --------------------------------------------------------------------------------------------
+		cmdFile.close()
+
+# Loop RECORDCOUNT times to write to outputFile --- cmdLine[<COMMAND>, <LABEL>, <FILENAME>]
+for i in range(recordCount):
+
+	# Define Dictionary randomData
+	randomData = {}
+
+	# List for Displaying Output
+	displayOutput = []
+
+	for j in range(len(cmdList)):
+		cmdLine = shlex.split(cmdList[j])
+		cmd = cmdLine[0]
+		label = cmdLine[1]
+
+
+		if cmd == "STRING":
+			outputFile.write(label.encode("utf-8").decode("unicode_escape"))
+			displayOutput.append(label.encode("utf-8").decode("unicode_escape"))
+
+		if cmd == "WORD":
+			
+			if label in randomData:
+				print("ERROR: KEY ALREADY EXISTS")
+				exit(1) # If label is not unique, exit program
+
+			else:
+				key = cmdLine[2]
+				indexCount = (len(randomFiles[key]) - 1)
+
+				randomWord = randomFiles[key][random.randint(0, indexCount)]
+				randomWord = randomWord.rstrip()
+				randomData[label] = randomWord # Add Word to Dictionary: randomData[<LABEL>] => randomWord
+				outputFile.write(randomData[label]) # Write to outputFile using key = <LABEL>
+				displayOutput.append(randomWord)
+		
+		if cmd == "REFER":
+			outputFile.write(randomData[label])
+			displayOutput.append(randomData[label])
+		
+		if cmd == "INTEGER":
+			min = int(cmdLine[2])
+			max = int(cmdLine[3])
+
+			if label in randomData:
+				print("ERROR: KEY ALREADY EXISTS")
+				exit(1) # If label is not unique, exit program
+
+			else:
+				randomInteger = random.randint(min, max)
+				randomData[label] = str(randomInteger) # Add Word to Dictionary: randomData[<LABEL>] => randomInteger
+				outputFile.write(randomData[label])
+				displayOutput.append(randomData[label])
+
+	#print(*displayOutput, sep='')
+
+exit(0) # End Program
+
+
+

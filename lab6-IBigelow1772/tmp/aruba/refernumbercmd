@@ -1,0 +1,5 @@
+INTEGER somenum 1 99999
+STRING " I said "
+REFER somenum
+STRING " I said "
+REFER somenum
