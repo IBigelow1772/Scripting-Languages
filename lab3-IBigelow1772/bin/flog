@@ -1,0 +1,28 @@
+#!/bin/bash
+# Ian Bigelow
+# Lab 3 - Failed Login Report
+# CS 3030 - Scripting Languages
+
+#Check the number of parameters on the commandline, exit script if needed
+if [ $# -ne 1 ]
+then
+        echo "Usage: srpt $PWD "
+exit 1
+fi
+
+#Search LOGFILE for all lines containing string = "Failed password for ____"
+grep 'Failed password for ' $@ > s1out
+sed -n 's/.*Failed password for \([a-z0-9A-Z_]*\) .*/\1/p' s1out >s2out
+sort <s2out >s3out
+uniq -c <s3out >s4out
+sort -k1,1nr -k2,2 s4out >s5out
+
+# Change the word "invalid to <UNKNOWN>
+sed 's/invalid/\&lt;UNKNOWN\&gt;/' <s5out >s6out
+
+#Print HTML tags
+printf "<html>\n<body><h1>Failed Login Attempts Report as of $(date)</h1>"
+cat s6out| while read mycount myuserid; do
+               printf "\n<br /> %'d %s" "$mycount" "$myuserid"
+done
+printf "</body> </html>\n"
