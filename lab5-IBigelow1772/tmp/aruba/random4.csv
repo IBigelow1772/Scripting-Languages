@@ -1,0 +1,9 @@
+wnumber,firstname,lastname,email,major,course,termcode,city,state,zip
+"W0000001","Sawyer","Rivas","Sawyer.Rivas@mail.weber.edu","Network Security & Adm","CS 4920","200510","Bryce Canyon City","CO","84009"
+"W0000002","Arabella","Summers","Arabella.Summers@mail.weber.edu","Technical Sales","CS 3730","200920","Leamington","AZ","84001"
+"W0000002","Arabella","Summers","Arabella.Summers@mail.weber.edu","Technical Sales","CS 2420","200610","Leamington","AZ","84001"
+"W0000003","Brogan","Singh","Brogan.Singh@mail.weber.edu","Non-Degree Seeking","CS 4790","200820","Aurora","ID","84005"
+"W0000003","Brogan","Singh","Brogan.Singh@mail.weber.edu","Non-Degree Seeking","CS 3210","200710","Aurora","ID","84005"
+"W0000004","Karen","Montgomery","Karen.Montgomery@mail.weber.edu","Electronics Engineering Tech","CS 2890","200920","Joseph","AZ","84005"
+"W0000005","Daisy","Huffman","Daisy.Huffman@mail.weber.edu","Computer Sci/Software Engr","CS 3705","200610","Sterling","AZ","84003"
+"W0000005","Daisy","Huffman","Daisy.Huffman@mail.weber.edu","Computer Sci/Software Engr","CS 4740","200630","Sterling","AZ","84003"
