@@ -1,0 +1,37 @@
+#!/bin/bash 
+# Ian Bigelow 
+# Lab2 - Search and Report 
+# CS 3030 - Scripting Languages
+if [ $# -ne 1 ]; then
+	    echo "Usage: srpt FOLDER"
+	        exit 1
+fi
+
+mkdir /tmp/$USER
+
+find $1 \( -type f -fprintf /tmp/$USER/numberoffiles "\n" \) , \( -type d -fprintf /tmp/$USER/numberofdirectories "\n" \) , \( -type l -fprintf /tmp/$USER/numberoflinks "\n" \) , \( -type f -fprintf /tmp/$USER/sizeofallfiles "%s\n" \) , \( -type f \( -name '*.jpg' -o -name '*.bmp' -o -name '*.gif' \) -fprintf /tmp/$USER/numberofgraphicsfiles "\n" \) , \( -type f -mtime +365 -fprintf /tmp/$USER/numberofoldfiles "\n" \) , \( -type f -executable -fprintf /tmp/$USER/numberofexecutablefiles "\n" \) , \( -type f \( -name '*.o' \) -fprintf /tmp/$USER/numberoftempfiles "\n" \)
+
+dirCnt=$(wc -l /tmp/$USER/numberofdirectories | cut -d' ' -f 1)
+((dirCnt--))
+fileCnt=$(wc -l /tmp/$USER/numberoffiles | cut -d' ' -f 1)
+symLnk=$(wc -l /tmp/$USER/numberoflinks | cut -d' ' -f 1)
+oldFileCnt=$(wc -l /tmp/$USER/numberofoldfiles | cut -d' ' -f 1)
+lrgFileCnt=$(awk '$1>500000{c++} END{print c+0}' /tmp/$USER/sizeofallfiles)
+graphicFileCnt=$(wc -l /tmp/$USER/numberofgraphicsfiles | cut -d' ' -f 1)
+tmpFileCnt=$(wc -l /tmp/$USER/numberoftempfiles | cut -d' ' -f 1)
+exeFileCnt=$(wc -l /tmp/$USER/numberofexecutablefiles | cut -d' ' -f 1)
+totalSize=$(awk '{tot=tot+$1} END {print tot}' /tmp/$USER/sizeofallfiles)
+
+printf "SearchReport %s %s %s %s %s %s %s %s %s\n\n" $HOSTNAME $1 $(date)
+printf "Execution time %'d\n" $SECONDS
+printf "Directories %'d\n" $dirCnt 
+printf "Files %'d\n" $fileCnt
+printf "Sym links %'d\n" $symLnk
+printf "Old files %'d\n" $oldFileCnt
+printf "Large files %'d\n" $lrgFileCnt
+printf "Graphics files %'d\n" $graphicFileCnt
+printf "Temporary files %'d\n" $tmpFileCnt
+printf "Executable files %'d\n" $exeFileCnt
+printf "TotalFileSize %'d\n" $totalSize
+
+rm -r /tmp/$USER
