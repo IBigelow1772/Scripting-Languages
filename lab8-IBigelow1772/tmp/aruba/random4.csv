@@ -1,0 +1,5 @@
+wnumber,firstname,lastname,email,major,course,termcode,city,state,zip
+"W0000001","Greyson","Dennis","Greyson.Dennis@mail.weber.edu","Electronics Engineering Tech","CS 1030","200910","Payson","UT","84009"
+"W0000001","Greyson","Dennis","Greyson.Dennis@mail.weber.edu","Electronics Engineering Tech","CS 2920","200630","Payson","UT","84009"
+"W0000002","Amir","Hoffman","Amir.Hoffman@mail.weber.edu","Physics/Applied Physics","CS 4230","200530","Lynndyl","ID","84007"
+"W0000003","Destinee","Case","Destinee.Case@mail.weber.edu","Info Systems and Technologies","CS 1022","200720","Big Water","MT","84005"
