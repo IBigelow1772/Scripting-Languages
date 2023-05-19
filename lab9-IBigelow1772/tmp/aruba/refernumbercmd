@@ -1,0 +1,5 @@
+INTEGER numlabel 1 99999
+STRING " I said "
+REFER numlabel
+STRING " I said "
+REFER numlabel
