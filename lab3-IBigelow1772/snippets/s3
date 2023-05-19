@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# s3
-
-# Ted Cowan - sort the user names
-
-sort <s2out >s3out
-
